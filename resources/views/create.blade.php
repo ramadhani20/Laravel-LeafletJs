@@ -37,12 +37,16 @@
     </div>
 
     {{-- leaflet --}}
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-
+    <link rel="stylesheet" href="{{asset('assets/leaflet/leaflet.css')}}" />
+    <script src="{{asset('assets/leaflet/leaflet.js')}}"></script>
     {{-- leaflet Draw --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.css"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js"></script>
+    {{-- <link rel="stylesheet" href="{{asset('assets/leaflet-draw/dist/leaflet.draw.css')}}"/>
+    <script src="{{asset('assets/leaflet-draw/dist/leaflet.draw.js')}}"></script> --}}
+
+    <link rel="stylesheet" href="{{asset('assets/leaflet-geocoding/dist/css/L.Control.OpenCageGeocoding.min.css')}}">
+    <script src="{{asset('assets/leaflet-geocoding/dist/js/L.Control.OpenCageGeocoding.min.js')}}"></script>
 
     {{-- Bootstrap --}}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
@@ -62,7 +66,7 @@
         const map = L.map('map', {
             center: [-7.257221472743715, 112.75834095184003],
             zoom:12,
-            layers: [peta2]
+            layers: [peta2],
         });
 
         const baseLayers = {
@@ -111,8 +115,16 @@
     map.on('draw:deleted', function (e) {
         $("[name=zone_coordinates]").val(JSON.stringify(drawnItems.toGeoJSON()));
      });
+    //  L.Control.geocoder().addTo(map);
 
+    var options = {
+    key: '31c6be9f10834fa9bdb8854537d26709',
+    limit: 5,
+    };
+
+    var control = L.Control.openCageGeocoding(options).addTo(map)
 
     </script>
+
 </body>
 </html>
